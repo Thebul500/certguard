@@ -11,3 +11,4 @@ build/
 htmlcov/
 .coverage
 .worktrees/
+benchmarks/results.json
