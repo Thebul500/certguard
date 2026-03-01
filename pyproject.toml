@@ -66,6 +66,11 @@ select = [
 [tool.mypy]
 python_version = "3.11"
 warn_return_any = true
+plugins = ["pydantic.mypy"]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
