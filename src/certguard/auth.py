@@ -34,7 +34,8 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
     delta = expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
     expire = datetime.now(UTC) + delta
     to_encode["exp"] = expire
-    return jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
+    encoded: str = jwt.encode(to_encode, settings.secret_key, algorithm=ALGORITHM)
+    return encoded
 
 
 async def get_current_user(
