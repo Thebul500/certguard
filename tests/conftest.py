@@ -1,5 +1,10 @@
 """Test fixtures."""
 
+import os
+
+# Set required env vars before importing certguard (which reads them at import time).
+os.environ.setdefault("CERTGUARD_SECRET_KEY", "testing-only-not-a-real-secret")
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine

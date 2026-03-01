@@ -25,6 +25,7 @@ jobs:
           --health-retries 5
     env:
       CERTGUARD_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/certguard
+      CERTGUARD_SECRET_KEY: ci-testing-key-not-for-production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

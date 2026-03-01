@@ -4,10 +4,15 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    """Application settings loaded from environment."""
+    """Application settings loaded from environment.
 
-    database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/certguard"
-    secret_key: str = "change-me-in-production"  # noqa: S105
+    Required environment variables:
+        CERTGUARD_DATABASE_URL: Database connection string.
+        CERTGUARD_SECRET_KEY: Secret key for JWT signing.
+    """
+
+    database_url: str = "sqlite+aiosqlite://"
+    secret_key: str  # Required — set CERTGUARD_SECRET_KEY
     access_token_expire_minutes: int = 30
     debug: bool = False
 

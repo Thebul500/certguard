@@ -1,10 +1,18 @@
 """Alembic environment configuration."""
 
+import os
+
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
 
 config = context.config
+
+# Override sqlalchemy.url from environment if set (avoids hardcoding credentials).
+db_url = os.environ.get("CERTGUARD_DATABASE_URL")
+if db_url:
+    # Alembic needs a sync driver; swap asyncpg → psycopg2 if present.
+    config.set_main_option("sqlalchemy.url", db_url.replace("+asyncpg", ""))
 
 
 def run_migrations_offline():
