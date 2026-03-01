@@ -1,0 +1,191 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:certguard-sbom-0.1.0",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-03-01T00:00:00Z",
+    "component": {
+      "type": "application",
+      "name": "certguard",
+      "version": "0.1.0",
+      "description": "SSL/TLS certificate inventory and expiry tracker",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:pypi/certguard@0.1.0"
+    },
+    "tools": [
+      {
+        "name": "certguard-sbom-generator",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "fastapi",
+      "version": ">=0.110",
+      "purl": "pkg:pypi/fastapi",
+      "scope": "required",
+      "description": "FastAPI web framework"
+    },
+    {
+      "type": "library",
+      "name": "uvicorn",
+      "version": ">=0.29",
+      "purl": "pkg:pypi/uvicorn",
+      "scope": "required",
+      "description": "ASGI server implementation"
+    },
+    {
+      "type": "library",
+      "name": "sqlalchemy",
+      "version": ">=2.0",
+      "purl": "pkg:pypi/sqlalchemy",
+      "scope": "required",
+      "description": "SQL toolkit and ORM with async support"
+    },
+    {
+      "type": "library",
+      "name": "asyncpg",
+      "version": ">=0.29",
+      "purl": "pkg:pypi/asyncpg",
+      "scope": "required",
+      "description": "PostgreSQL driver for asyncio"
+    },
+    {
+      "type": "library",
+      "name": "alembic",
+      "version": ">=1.13",
+      "purl": "pkg:pypi/alembic",
+      "scope": "required",
+      "description": "Database migration tool for SQLAlchemy"
+    },
+    {
+      "type": "library",
+      "name": "pydantic-settings",
+      "version": ">=2.2",
+      "purl": "pkg:pypi/pydantic-settings",
+      "scope": "required",
+      "description": "Settings management using Pydantic"
+    },
+    {
+      "type": "library",
+      "name": "python-jose",
+      "version": ">=3.3",
+      "purl": "pkg:pypi/python-jose",
+      "scope": "required",
+      "description": "JOSE implementation with cryptography backend"
+    },
+    {
+      "type": "library",
+      "name": "passlib",
+      "version": ">=1.7",
+      "purl": "pkg:pypi/passlib",
+      "scope": "required",
+      "description": "Password hashing library with bcrypt support"
+    },
+    {
+      "type": "library",
+      "name": "httpx",
+      "version": ">=0.27",
+      "purl": "pkg:pypi/httpx",
+      "scope": "required",
+      "description": "Async HTTP client"
+    },
+    {
+      "type": "library",
+      "name": "pytest",
+      "version": "",
+      "purl": "pkg:pypi/pytest",
+      "scope": "optional",
+      "description": "Testing framework"
+    },
+    {
+      "type": "library",
+      "name": "pytest-cov",
+      "version": "",
+      "purl": "pkg:pypi/pytest-cov",
+      "scope": "optional",
+      "description": "Coverage plugin for pytest"
+    },
+    {
+      "type": "library",
+      "name": "pytest-asyncio",
+      "version": "",
+      "purl": "pkg:pypi/pytest-asyncio",
+      "scope": "optional",
+      "description": "Asyncio support for pytest"
+    },
+    {
+      "type": "library",
+      "name": "aiosqlite",
+      "version": "",
+      "purl": "pkg:pypi/aiosqlite",
+      "scope": "optional",
+      "description": "Async SQLite driver for testing"
+    },
+    {
+      "type": "library",
+      "name": "ruff",
+      "version": "",
+      "purl": "pkg:pypi/ruff",
+      "scope": "optional",
+      "description": "Python linter and formatter"
+    },
+    {
+      "type": "library",
+      "name": "mypy",
+      "version": "",
+      "purl": "pkg:pypi/mypy",
+      "scope": "optional",
+      "description": "Static type checker"
+    },
+    {
+      "type": "library",
+      "name": "bandit",
+      "version": "",
+      "purl": "pkg:pypi/bandit",
+      "scope": "optional",
+      "description": "Security linter for Python"
+    },
+    {
+      "type": "library",
+      "name": "setuptools",
+      "version": ">=68.0",
+      "purl": "pkg:pypi/setuptools",
+      "scope": "required",
+      "description": "Build system requirement"
+    },
+    {
+      "type": "library",
+      "name": "wheel",
+      "version": "",
+      "purl": "pkg:pypi/wheel",
+      "scope": "required",
+      "description": "Build system requirement"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:pypi/certguard@0.1.0",
+      "dependsOn": [
+        "pkg:pypi/fastapi",
+        "pkg:pypi/uvicorn",
+        "pkg:pypi/sqlalchemy",
+        "pkg:pypi/asyncpg",
+        "pkg:pypi/alembic",
+        "pkg:pypi/pydantic-settings",
+        "pkg:pypi/python-jose",
+        "pkg:pypi/passlib",
+        "pkg:pypi/httpx"
+      ]
+    }
+  ]
+}
