@@ -1,7 +1,5 @@
 """Tests for SQLAlchemy models."""
 
-from sqlalchemy import inspect
-
 from certguard.models import BaseModel
 
 

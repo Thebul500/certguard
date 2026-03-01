@@ -29,6 +29,36 @@ dev = ["pytest", "pytest-cov", "pytest-asyncio", "httpx", "ruff", "mypy", "bandi
 
 [tool.ruff]
 line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",     # pycodestyle errors
+    "F",     # pyflakes
+    "W",     # pycodestyle warnings
+    "I",     # isort
+    "UP",    # pyupgrade
+    "B",     # flake8-bugbear
+    "SIM",   # flake8-simplify
+    "N",     # pep8-naming
+    "RUF",   # ruff-specific
+    "S",     # flake8-bandit (security)
+    "T20",   # flake8-print
+    "PTH",   # flake8-use-pathlib
+    "TCH",   # flake8-type-checking
+    "C4",    # flake8-comprehensions
+    "PIE",   # flake8-pie
+    "RET",   # flake8-return
+    "ERA",   # eradicate (commented-out code)
+    "PGH",   # pygrep-hooks
+    "FLY",   # flynt
+    "PERF",  # perflint
+    "FURB",  # refurb
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101"]
+"alembic/**/*.py" = ["INP001"]
 
 [tool.mypy]
 python_version = "3.11"
