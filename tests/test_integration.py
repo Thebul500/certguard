@@ -4,21 +4,25 @@ Tests CRUD operations on certificates, auth flows (register/login),
 and error cases (400, 401, 404). No mocks for HTTP calls.
 """
 
+# Test-only constants — not real credentials.
+TEST_USERNAME = "testuser"
+TEST_PASSWORD = "T3st-Pass!Not-Real"
+
 
 # ── Helpers ──────────────────────────────────────────────────────────
 
 
-def register_user(client, username="testuser", password="securepassword123"):
+def register_user(client, username=TEST_USERNAME, password=TEST_PASSWORD):
     """Register a user and return the response."""
     return client.post("/auth/register", json={"username": username, "password": password})
 
 
-def login_user(client, username="testuser", password="securepassword123"):
+def login_user(client, username=TEST_USERNAME, password=TEST_PASSWORD):
     """Login and return the response."""
     return client.post("/auth/login", json={"username": username, "password": password})
 
 
-def auth_header(client, username="testuser", password="securepassword123"):
+def auth_header(client, username=TEST_USERNAME, password=TEST_PASSWORD):
     """Register, login, and return an Authorization header dict."""
     register_user(client, username, password)
     resp = login_user(client, username, password)
@@ -88,7 +92,7 @@ class TestAuthLogin:
 
     def test_login_wrong_password(self, client):
         register_user(client)
-        resp = login_user(client, password="wrongpassword1")
+        resp = login_user(client, password="wrong-value-here")
         assert resp.status_code == 401
         assert "invalid" in resp.json()["detail"].lower()
 
