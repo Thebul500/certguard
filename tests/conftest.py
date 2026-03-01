@@ -3,7 +3,7 @@
 import os
 
 # Set required env vars before importing certguard (which reads them at import time).
-os.environ.setdefault("CERTGUARD_SECRET_KEY", "testing-only-not-a-real-secret")
+os.environ.setdefault("CERTGUARD_SECRET_KEY", "testing-only-not-a-real-secret-key-value")
 
 import pytest
 from fastapi.testclient import TestClient
