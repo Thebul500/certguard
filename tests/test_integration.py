@@ -96,7 +96,7 @@ class TestAuthLogin:
 
     def test_login_wrong_password(self, client):
         register_user(client)
-        resp = login_user(client, password="wrong-value-here")
+        resp = login_user(client, password="wrong!1")
         assert resp.status_code == 401
         assert "invalid" in resp.json()["detail"].lower()
 
