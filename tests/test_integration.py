@@ -4,11 +4,13 @@ Tests CRUD operations on certificates, auth flows (register/login),
 and error cases (400, 401, 404). No mocks for HTTP calls.
 """
 
-import os
+import secrets
+import string
 
-# Test-only constants — read from env so no credentials are hardcoded.
-TEST_USERNAME = os.environ.get("CERTGUARD_TEST_USERNAME", "testuser")
-TEST_PASSWORD = os.environ.get("CERTGUARD_TEST_PASSWORD", "TestPass123!")
+# Test-only constants — generated at import time so no credentials are hardcoded.
+TEST_USERNAME = "testuser"
+_ALPHABET = string.ascii_letters + string.digits + string.punctuation
+TEST_PASSWORD = "T" + secrets.choice(string.ascii_lowercase) + secrets.choice(string.digits) + "".join(secrets.choice(_ALPHABET) for _ in range(9))
 
 
 # ── Helpers ──────────────────────────────────────────────────────────
