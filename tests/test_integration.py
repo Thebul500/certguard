@@ -10,7 +10,12 @@ import string
 # Test-only constants — generated at import time so no credentials are hardcoded.
 TEST_USERNAME = "testuser"
 _ALPHABET = string.ascii_letters + string.digits + string.punctuation
-TEST_PASSWORD = "T" + secrets.choice(string.ascii_lowercase) + secrets.choice(string.digits) + "".join(secrets.choice(_ALPHABET) for _ in range(9))
+TEST_PASSWORD = (
+    "T"
+    + secrets.choice(string.ascii_lowercase)
+    + secrets.choice(string.digits)
+    + "".join(secrets.choice(_ALPHABET) for _ in range(9))
+)
 
 
 # ── Helpers ──────────────────────────────────────────────────────────

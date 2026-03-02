@@ -187,26 +187,28 @@ def format_markdown(results: list[dict]) -> str:
     # Collect system info
     import platform
 
-    lines.extend([
-        f"- **OS**: {platform.system()} {platform.release()}",
-        f"- **Python**: {platform.python_version()}",
-        f"- **CPU**: {os.cpu_count()} cores",
-        "- **Server**: uvicorn (single worker, async)",
-        "- **Client**: httpx async with connection pooling",
-        f"- **Date**: {time.strftime('%Y-%m-%d')}",
-        "",
-        "## Methodology",
-        "",
-        "Each scenario runs a warmup phase (50 requests) followed by the measured requests.",
-        "Latency is measured client-side per request using `time.perf_counter()`.",
-        "Requests are issued concurrently using `asyncio.gather()` with a semaphore to",
-        "control concurrency level. All times are in milliseconds.",
-        "",
-        "## Results Summary",
-        "",
-        "| # | Scenario | Requests | Concurrency | Req/sec | p50 (ms) | p95 (ms) | p99 (ms) |",
-        "|---|----------|----------|-------------|---------|----------|----------|----------|",
-    ])
+    lines.extend(
+        [
+            f"- **OS**: {platform.system()} {platform.release()}",
+            f"- **Python**: {platform.python_version()}",
+            f"- **CPU**: {os.cpu_count()} cores",
+            "- **Server**: uvicorn (single worker, async)",
+            "- **Client**: httpx async with connection pooling",
+            f"- **Date**: {time.strftime('%Y-%m-%d')}",
+            "",
+            "## Methodology",
+            "",
+            "Each scenario runs a warmup phase (50 requests) followed by the measured requests.",
+            "Latency is measured client-side per request using `time.perf_counter()`.",
+            "Requests are issued concurrently using `asyncio.gather()` with a semaphore to",
+            "control concurrency level. All times are in milliseconds.",
+            "",
+            "## Results Summary",
+            "",
+            "| # | Scenario | Requests | Concurrency | Req/sec | p50 (ms) | p95 (ms) | p99 (ms) |",
+            "|---|----------|----------|-------------|---------|----------|----------|----------|",
+        ]
+    )
 
     for i, r in enumerate(results, 1):
         lat = r["latency_ms"]
@@ -221,35 +223,39 @@ def format_markdown(results: list[dict]) -> str:
 
     for i, r in enumerate(results, 1):
         lat = r["latency_ms"]
-        lines.extend([
-            f"### Scenario {i}: `{r['method']} {r['url']}`",
-            "",
-            f"**{r['description']}**",
-            "",
-            f"- **Requests**: {r['num_requests']}",
-            f"- **Concurrency**: {r['concurrency']}",
-            f"- **Errors**: {r['errors']}",
-            f"- **Wall time**: {r['wall_time_sec']}s",
-            f"- **Throughput**: {r['requests_per_sec']} req/sec",
-            "",
-            "| Metric | Value (ms) |",
-            "|--------|-----------|",
-            f"| Min | {lat['min']} |",
-            f"| Mean | {lat['mean']} |",
-            f"| p50 (median) | {lat['p50']} |",
-            f"| p95 | {lat['p95']} |",
-            f"| p99 | {lat['p99']} |",
-            f"| Max | {lat['max']} |",
-            f"| Std Dev | {lat['stdev']} |",
-            "",
-        ])
+        lines.extend(
+            [
+                f"### Scenario {i}: `{r['method']} {r['url']}`",
+                "",
+                f"**{r['description']}**",
+                "",
+                f"- **Requests**: {r['num_requests']}",
+                f"- **Concurrency**: {r['concurrency']}",
+                f"- **Errors**: {r['errors']}",
+                f"- **Wall time**: {r['wall_time_sec']}s",
+                f"- **Throughput**: {r['requests_per_sec']} req/sec",
+                "",
+                "| Metric | Value (ms) |",
+                "|--------|-----------|",
+                f"| Min | {lat['min']} |",
+                f"| Mean | {lat['mean']} |",
+                f"| p50 (median) | {lat['p50']} |",
+                f"| p95 | {lat['p95']} |",
+                f"| p99 | {lat['p99']} |",
+                f"| Max | {lat['max']} |",
+                f"| Std Dev | {lat['stdev']} |",
+                "",
+            ]
+        )
 
-    lines.extend([
-        "## Analysis",
-        "",
-        "### Key Observations",
-        "",
-    ])
+    lines.extend(
+        [
+            "## Analysis",
+            "",
+            "### Key Observations",
+            "",
+        ]
+    )
 
     # Generate observations from data
     health = results[0]
@@ -257,41 +263,45 @@ def format_markdown(results: list[dict]) -> str:
     error = results[2]
     high_conc = results[3]
 
-    lines.extend([
-        f"1. **Health endpoint throughput**: {health['requests_per_sec']} req/sec at "
-        f"{health['concurrency']} concurrency with p99 latency of "
-        f"{health['latency_ms']['p99']}ms.",
-        "",
-        f"2. **Readiness probe performance**: {ready['requests_per_sec']} req/sec — "
-        f"the minimal response keeps latency low (p50: {ready['latency_ms']['p50']}ms).",
-        "",
-        f"3. **Error handling overhead**: 404 responses at {error['requests_per_sec']} req/sec "
-        f"with p99 of {error['latency_ms']['p99']}ms, showing FastAPI's error handling "
-        "adds minimal overhead.",
-        "",
-        f"4. **High concurrency behavior**: At {high_conc['concurrency']} concurrent connections, "
-        f"throughput reaches {high_conc['requests_per_sec']} req/sec with p99 of "
-        f"{high_conc['latency_ms']['p99']}ms.",
-        "",
-        "### Performance Targets",
-        "",
-        "| Metric | Target | Status |",
-        "|--------|--------|--------|",
-    ])
+    lines.extend(
+        [
+            f"1. **Health endpoint throughput**: {health['requests_per_sec']} req/sec at "
+            f"{health['concurrency']} concurrency with p99 latency of "
+            f"{health['latency_ms']['p99']}ms.",
+            "",
+            f"2. **Readiness probe performance**: {ready['requests_per_sec']} req/sec — "
+            f"the minimal response keeps latency low (p50: {ready['latency_ms']['p50']}ms).",
+            "",
+            f"3. **Error handling overhead**: 404 responses at {error['requests_per_sec']} req/sec "
+            f"with p99 of {error['latency_ms']['p99']}ms, showing FastAPI's error handling "
+            "adds minimal overhead.",
+            "",
+            f"4. **High concurrency behavior**: At {high_conc['concurrency']} "
+            f"concurrent connections, throughput reaches "
+            f"{high_conc['requests_per_sec']} req/sec with p99 of "
+            f"{high_conc['latency_ms']['p99']}ms.",
+            "",
+            "### Performance Targets",
+            "",
+            "| Metric | Target | Status |",
+            "|--------|--------|--------|",
+        ]
+    )
 
     health_p99 = health["latency_ms"]["p99"]
     health_rps = health["requests_per_sec"]
     error_rate = sum(r["errors"] for r in results) / sum(r["num_requests"] for r in results) * 100
 
-    lines.extend([
-        f"| Health check p99 < 50ms | {health_p99}ms | "
-        f"{'PASS' if health_p99 < 50 else 'REVIEW'} |",
-        f"| Throughput > 500 req/sec | {health_rps} req/sec | "
-        f"{'PASS' if health_rps > 500 else 'REVIEW'} |",
-        f"| Error rate < 1% | {error_rate:.2f}% | "
-        f"{'PASS' if error_rate < 1 else 'REVIEW'} |",
-        "",
-    ])
+    lines.extend(
+        [
+            f"| Health check p99 < 50ms | {health_p99}ms | "
+            f"{'PASS' if health_p99 < 50 else 'REVIEW'} |",
+            f"| Throughput > 500 req/sec | {health_rps} req/sec | "
+            f"{'PASS' if health_rps > 500 else 'REVIEW'} |",
+            f"| Error rate < 1% | {error_rate:.2f}% | {'PASS' if error_rate < 1 else 'REVIEW'} |",
+            "",
+        ]
+    )
 
     return "\n".join(lines)
 
@@ -305,11 +315,16 @@ def main():
     # Start server
     server_proc = subprocess.Popen(
         [
-            sys.executable, "-m", "uvicorn",
+            sys.executable,
+            "-m",
+            "uvicorn",
             "certguard.app:app",
-            "--host", "127.0.0.1",
-            "--port", str(port),
-            "--log-level", "warning",
+            "--host",
+            "127.0.0.1",
+            "--port",
+            str(port),
+            "--log-level",
+            "warning",
         ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

@@ -14,8 +14,8 @@ from .routes.health import router as health_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan: startup and shutdown."""
-    from .database import Base, engine
     from . import models  # noqa: F401 — ensure models registered
+    from .database import Base, engine
 
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
