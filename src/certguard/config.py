@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     """
 
     database_url: str = "sqlite+aiosqlite://"
-    secret_key: str = "change-me-in-production"  # noqa: S105 — dev default, set CERTGUARD_SECRET_KEY in production
+    secret_key: str  # Required — set CERTGUARD_SECRET_KEY env var
     access_token_expire_minutes: int = 30
     debug: bool = False
 
