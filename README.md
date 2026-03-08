@@ -1,6 +1,6 @@
 # certguard
 
-SSL/TLS certificate inventory and expiry tracker. Scans network hosts for all certificates, builds a dashboard showing cert status, expiry dates, issuers, and SANs. Alerts via Signal when certs are approaching expiry. Supports scanning arbitrary hosts/ports, importing from files, and auto-renewal hooks.
+Certificate metadata store with REST API. Manage SSL/TLS certificate records — track hostnames, expiry dates, issuers, SANs, and fingerprints. Provides full CRUD operations behind JWT authentication.
 
 [![CI](https://github.com/Thebul500/certguard/actions/workflows/ci.yml/badge.svg)](https://github.com/Thebul500/certguard/actions)
 
@@ -34,6 +34,13 @@ uvicorn certguard.app:app --host 0.0.0.0 --port 8000
 |--------|------|-------------|
 | GET | `/health` | Health check |
 | GET | `/ready` | Readiness probe |
+| POST | `/auth/register` | Register a new user |
+| POST | `/auth/login` | Authenticate and get JWT token |
+| POST | `/certificates/` | Add a certificate record (auth required) |
+| GET | `/certificates/` | List all certificate records (auth required) |
+| GET | `/certificates/{id}` | Get a single certificate (auth required) |
+| PUT | `/certificates/{id}` | Update a certificate record (auth required) |
+| DELETE | `/certificates/{id}` | Delete a certificate record (auth required) |
 
 ## Configuration
 
