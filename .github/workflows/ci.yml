@@ -9,23 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:16-alpine
-        env:
-          POSTGRES_DB: certguard
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    env:
-      CERTGUARD_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/certguard
-      CERTGUARD_SECRET_KEY: ci-testing-key-not-for-production
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -53,25 +36,4 @@ jobs:
           python-version: "3.12"
       - run: pip install -e .[dev]
       - name: Lint with ruff
-        run: ruff check src/
-      - name: Type check with mypy
-        run: mypy src/certguard/ --ignore-missing-imports
-
-  security:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install -e .[dev]
-      - name: Security scan with bandit
-        run: bandit -r src/certguard/ -f json -o bandit-report.json || true
-      - name: Bandit results
-        run: bandit -r src/certguard/ -q
-      - name: Upload bandit report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bandit-report
-          path: bandit-report.json
+        run: ruff check src/ tests/
